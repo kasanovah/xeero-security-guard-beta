@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XEERO AI Security Guard - Version 0.1.0 Private Beta</title>
+    <style>
+        :root {
+            --background: #070B14;
+            --deep-navy: #0B1630;
+            --electric-cyan: #00E5FF;
+            --vivid-blue: #2563EB;
+            --ultraviolet: #7C3AED;
+            --white: #F8FAFC;
+            --cool-gray: #94A3B8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(11, 22, 48, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--electric-cyan);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--electric-cyan);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(11, 22, 48, 0.8) 0%, var(--background) 70%);
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--ultraviolet);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--electric-cyan), var(--white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--cool-gray);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--electric-cyan), var(--vivid-blue));
+            color: var(--background);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.3);
+        }
+
+        .platform-info {
+            color: var(--cool-gray);
+            font-size: 0.875rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--electric-cyan);
+        }
+
+        .section-header p {
+            color: var(--cool-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--deep-navy);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--electric-cyan);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .card p {
+            color: var(--cool-gray);
+        }
+
+        /* Steps Section */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--ultraviolet), var(--vivid-blue));
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--electric-cyan);
+        }
+
+        /* Beta Section */
+        .beta-section {
+            background: linear-gradient(135deg, rgba(11, 22, 48, 0.8), rgba(37, 99, 235, 0.1));
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 5rem 0;
+        }
+
+        .beta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--electric-cyan);
+        }
+
+        .beta-section p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: var(--cool-gray);
+        }
+
+        .beta-tags {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .beta-tag {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--electric-cyan);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        /* Notice Section */
+        .notice {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .notice p {
+            color: #FECACA;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deep-navy);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 229, 255, 0.1);
+        }
+
+        footer p {
+            color: var(--cool-gray);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--deep-navy);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+                border-top: 1px solid rgba(0, 229, 255, 0.2);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .beta-tags {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cards-grid, .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">XEERO AI</a>
+            <nav>
+                <ul id="mobile-navigation">
+                    <li><a href="#features" onclick="closeMobileMenu()">Features</a></li>
+                    <li><a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a></li>
+                    <li><a href="#private-beta" onclick="closeMobileMenu()">Private Beta</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" 
+                    aria-label="Open navigation menu" 
+                    aria-expanded="false" 
+                    aria-controls="mobile-navigation"
+                    onclick="toggleMobileMenu()">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <span class="badge">PRIVATE BETA · VERSION 0.1.0</span>
+            <h1>Xeero AI Security Guard</h1>
+            <p>Xeero AI Security Guard 0.1.0 is a read-only Windows security-status dashboard that helps you understand what Windows reports about your Antivirus, Firewall, and Windows Update.</p>
+            <a href="https://forms.gle/dh2n72hHd3qDJHf77" target="_blank" rel="noopener noreferrer" class="cta-button">Request Beta Access</a>
+            <div class="platform-info">Windows x64 · Private Beta · Version 0.1.0</div>
+        </div>
+    </section>
+
+    <!-- What Xeero Checks Section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Xeero Checks</h2>
+                <p>Xeero currently focuses on three Windows security areas.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Antivirus Status</h3>
+                    <p>Check the antivirus status reported by Windows, including Microsoft Defender.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔒</div>
+                    <h3>Firewall Status</h3>
+                    <p>Review the Windows Firewall status reported by Windows across its network profiles.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3>Windows Update Status</h3>
+                    <p>Review the Windows Update status reported by Windows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Simple three-step process to understand your Windows security status.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h3>Check</h3>
+                    <p>Xeero checks the security status reported by Windows.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h3>Understand</h3>
+                    <p>Review the reported status and supporting details in one place.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h3>Keep Your Protection</h3>
+                    <p>Xeero is designed to complement Windows security protections, not replace them.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Private Beta Section -->
+    <section id="private-beta">
+        <div class="container">
+            <div class="beta-section">
+                <h2>Join the Xeero AI Security Guard Private Beta</h2>
+                <p>We're inviting a limited number of Windows users to test version 0.1.0 and help us improve the product.</p>
+                <div class="beta-tags">
+                    <span class="beta-tag">Private Beta</span>
+                    <span class="beta-tag">Windows x64</span>
+                    <span class="beta-tag">Version 0.1.0</span>
+                </div>
+                <a href="https://forms.gle/dh2n72hHd3qDJHf77" target="_blank" rel="noopener noreferrer" class="cta-button">Apply for Private Beta</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Notice Section -->
+    <section>
+        <div class="container">
+            <div class="notice">
+                <p>Xeero is private beta software and is not a replacement for Microsoft Defender or Windows Security.</p>
+                <p>Users should keep existing Windows security protections enabled while testing Xeero.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>XEERO AI · Xeero AI Security Guard · Version 0.1.0 Private Beta</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav ul');
+            
+            if (nav.style.display === 'flex') {
+                closeMobileMenu();
+            } else {
+                nav.style.display = 'flex';
+                menuBtn.setAttribute('aria-expanded', 'true');
+                menuBtn.setAttribute('aria-label', 'Close navigation menu');
+            }
+        }
+
+        function closeMobileMenu() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav ul');
+            
+            nav.style.display = 'none';
+            menuBtn.setAttribute('aria-expanded', 'false');
+            menuBtn.setAttribute('aria-label', 'Open navigation menu');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav ul');
+            
+            if (!menuBtn.contains(event.target) && !nav.contains(event.target)) {
+                if (nav.style.display === 'flex') {
+                    closeMobileMenu();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
